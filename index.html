@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Last Chapter — Retirement vs. Lifespan Across the OECD</title>
+<meta name="description" content="In every OECD country, women outlast men in retirement. A by-sex look at the gap between when work ends and when life expectancy runs out, across 38 countries." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <a class="topbar__mark" href="#top">RET·<span>EXP</span></a>
+  <nav class="topbar__nav" aria-label="Sections">
+    <a href="#chart">The spans</a>
+    <a href="#findings">What drives it</a>
+    <a href="#data">Full data</a>
+    <a href="#method">Method</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="eyebrow">38 OECD countries · by sex · expected years in retirement</p>
+    <h1 class="hero__title">In every OECD country,<br /><em>women outlast men</em> in&nbsp;retirement.</h1>
+    <p class="hero__lede">
+      Two forces stack on top of each other. Women simply live longer — and in a
+      shrinking handful of countries they are still allowed to stop working earlier.
+      The result is a stretch of years, after the last paycheck and before life
+      expectancy runs out, that is consistently longer for women than for men.
+    </p>
+
+    <!-- Explanatory span diagram = the legend that teaches the chart -->
+    <figure class="demo" aria-label="How to read a span: the bar runs from retirement age to expected end of life.">
+      <div class="demo__ruler" aria-hidden="true">
+        <span style="left:0%">60</span>
+        <span style="left:25%">65</span>
+        <span style="left:50%">70</span>
+        <span style="left:75%">75</span>
+        <span style="left:100%">80+</span>
+      </div>
+      <div class="demo__lanes">
+        <div class="demo__lane">
+          <span class="demo__who demo__who--m">Men</span>
+          <div class="demo__track">
+            <div class="demo__retire" style="left:25%"><span>retire · 65</span></div>
+            <div class="demo__bar demo__bar--m" style="--start:25%;--len:0%" data-len="90%"></div>
+            <span class="demo__years demo__years--m">18 yrs</span>
+          </div>
+        </div>
+        <div class="demo__lane">
+          <span class="demo__who demo__who--f">Women</span>
+          <div class="demo__track">
+            <div class="demo__retire" style="left:25%"></div>
+            <div class="demo__bar demo__bar--f" style="--start:25%;--len:0%" data-len="105%"></div>
+            <span class="demo__years demo__years--f">23 yrs</span>
+          </div>
+        </div>
+      </div>
+      <figcaption class="demo__cap">
+        Each bar starts at the normal retirement age and runs as long as a person is
+        then expected to keep living. Its <strong>length</strong> is the years spent
+        in retirement; the <strong>distance between the two bars</strong> is the gap
+        between the sexes.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- CHART -->
+  <section id="chart" class="block">
+    <div class="block__head">
+      <p class="eyebrow">The spans</p>
+      <h2 class="block__title">Years of retirement, country by country</h2>
+      <p class="block__intro">
+        Bars run along a shared age ruler. <span class="ink ink--m">Teal is men</span>,
+        <span class="ink ink--f">amber is women</span>. Longer bar, longer retirement.
+        Hover or focus any bar for the underlying numbers.
+      </p>
+    </div>
+
+    <div class="controls" role="group" aria-label="Sort the countries">
+      <span class="controls__label">Sort by</span>
+      <button class="chip is-active" data-sort="gap">Female–male gap</button>
+      <button class="chip" data-sort="women">Women's years</button>
+      <button class="chip" data-sort="men">Men's years</button>
+      <button class="chip" data-sort="retire">Retirement age</button>
+      <button class="chip" data-sort="alpha">A–Z</button>
+    </div>
+
+    <div id="spanChart" class="spanchart"><!-- axis + lanes injected here --></div>
+
+    <p class="chart-foot">
+      <span class="flagmark">*</span> Türkiye's statutory ages (52 / 49) are a legacy
+      and transition artifact; its effective exit is near 61. Chile's 65 / 60 split is
+      in the mandatory funded scheme. Both read differently on other measures — see Method.
+    </p>
+  </section>
+
+  <!-- FINDINGS -->
+  <section id="findings" class="block block--prose">
+    <div class="block__head">
+      <p class="eyebrow">What drives it</p>
+      <h2 class="block__title">Five things the spans reveal</h2>
+    </div>
+
+    <ol class="findings">
+      <li class="finding">
+        <h3 class="finding__h">It is now mostly about longevity, not policy</h3>
+        <p>
+          Most of the OECD has equalized statutory retirement ages. So the typical
+          gap of two to four years is driven almost entirely by women outliving men.
+          The countries with the smallest gaps — Iceland, New Zealand, Norway, the
+          United States — all pair a unisex age with a modest longevity difference.
+        </p>
+      </li>
+      <li class="finding">
+        <h3 class="finding__h">The remaining gendered ages produce the widest gaps</h3>
+        <p>
+          A few countries still let women retire earlier — Poland (65 / 60), Colombia
+          (62 / 57), Costa Rica, and Chile's funded pillar — with Austria, Switzerland
+          and Israel phasing the gap out. A lower age compounds with longer life.
+          <strong>Poland is the extreme:</strong> a woman retiring at 60 can expect
+          about 25 years of retirement against roughly 16 for a man — an 8.6-year gap.
+        </p>
+      </li>
+      <li class="finding">
+        <h3 class="finding__h">The Baltics show the opposite story</h3>
+        <p>
+          Estonia, Latvia and Lithuania have fully unisex ages of 65, yet still post
+          gaps near five years. That is pure mortality: Baltic men have some of the
+          OECD's lowest life expectancy at 65 — around 14.5 remaining years against
+          19.5 for women. Equal ages, deeply unequal lifespans, and one of the
+          shortest male retirements in the developed world.
+        </p>
+      </li>
+      <li class="finding">
+        <h3 class="finding__h">Statutory is not the same as actual</h3>
+        <p>
+          These spans use the statutory normal age. Real labour-market exit is often
+          earlier (France, Luxembourg, Austria) or later (Korea, where women work to
+          about 67). Hungary's "Women 40" rule and Chile's dual scheme mean realized
+          female retirement runs even longer than the bars suggest.
+        </p>
+      </li>
+      <li class="finding">
+        <h3 class="finding__h">Ages are rising — the longevity gap is not closing</h3>
+        <p>
+          Retirement ages are converging on 67, and a growing group now auto-indexes
+          the age to life expectancy: Denmark, Finland, Italy, Portugal, Greece, the
+          Netherlands, Estonia, Sweden and Norway. That compresses the retirement
+          window over time and erases the policy gap — but it leaves the
+          longevity-driven gap between the sexes largely intact.
+        </p>
+      </li>
+    </ol>
+
+    <aside class="pullstat">
+      <p class="pullstat__num">+4.4<span>yrs</span></p>
+      <p class="pullstat__cap">
+        The OECD's own figure for the gap, measured from the average effective exit
+        age, 2022: men spend <strong>18.4</strong> years in retirement, women
+        <strong>22.8</strong>.
+      </p>
+    </aside>
+  </section>
+
+  <!-- DATA TABLE -->
+  <section id="data" class="block">
+    <div class="block__head">
+      <p class="eyebrow">Full data</p>
+      <h2 class="block__title">Every country, every number</h2>
+      <p class="block__intro">Click a column heading to sort. Ages and life expectancy are by sex.</p>
+    </div>
+    <div class="tablewrap">
+      <table class="dtable" id="dtable">
+        <thead>
+          <tr>
+            <th class="is-sortable" data-key="country" scope="col">Country</th>
+            <th class="is-sortable num" data-key="retM" scope="col">Ret. M</th>
+            <th class="is-sortable num" data-key="retF" scope="col">Ret. F</th>
+            <th class="is-sortable num" data-key="expM" scope="col">Yrs ret. M</th>
+            <th class="is-sortable num" data-key="expF" scope="col">Yrs ret. F</th>
+            <th class="is-sortable num" data-key="gap" scope="col">Gap F–M</th>
+            <th class="is-sortable num" data-key="le65M" scope="col">LE@65 M</th>
+            <th class="is-sortable num" data-key="le65F" scope="col">LE@65 F</th>
+            <th class="is-sortable num" data-key="birthM" scope="col">LE birth M</th>
+            <th class="is-sortable num" data-key="birthF" scope="col">LE birth F</th>
+          </tr>
+        </thead>
+        <tbody><!-- rows injected --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section id="method" class="block block--prose">
+    <div class="block__head">
+      <p class="eyebrow">Method &amp; caveats</p>
+      <h2 class="block__title">How to read this honestly</h2>
+    </div>
+    <div class="method">
+      <p>
+        <strong>The core metric.</strong> "Expected years in retirement" is remaining
+        life expectancy <em>at</em> the normal retirement age. It folds the
+        retirement-age gap and the lifespan gap into one number. Where the age is
+        exactly 65 it equals life expectancy at 65; where it differs, the value is
+        interpolated from life expectancy at 65 using standard life-table decrements
+        (about 0.8–0.9 years per year of age). Treat figures as accurate to roughly
+        half a year — don't over-read a single decimal.
+      </p>
+      <p>
+        <strong>Statutory, not effective.</strong> Ages are the statutory normal
+        retirement age for a full-career worker, current or legislated for 2025–2026.
+        The OECD's official "expected years in retirement" indicator is measured from
+        the <em>effective</em> labour-market exit age instead, which is usually
+        earlier — so its numbers run larger, especially in France, Luxembourg and
+        Austria.
+      </p>
+      <p>
+        <strong>Data years.</strong> Life expectancy is mostly 2022–2023 period life
+        tables (UN World Population Prospects, cross-checked against OECD Pensions at a
+        Glance, Eurostat, the World Bank and national statistical offices). Period —
+        not cohort — life expectancy is used throughout. Türkiye is not comparable on
+        the statutory measure and is best read via its effective-exit figure (men ≈18,
+        women ≈24).
+      </p>
+      <p class="method__src">
+        <strong>Sources.</strong> OECD <em>Pensions at a Glance</em> 2023 &amp; 2025;
+        Finnish Centre for Pensions retirement-age comparison; UN World Population
+        Prospects 2022/2023; Eurostat mortality statistics; World Bank WDI; and
+        national statistical offices (ABS, StatCan, ONS, CDC/NCHS, CBS Israel, Stats NZ
+        and others).
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p class="foot__line">
+    Built as a data study of OECD pension and mortality statistics. Numbers are
+    approximations for comparison, not actuarial advice.
+  </p>
+  <p class="foot__meta">Retirement &amp; lifespan, by sex · 38 OECD countries</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
