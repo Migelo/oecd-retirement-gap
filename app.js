@@ -57,7 +57,18 @@ const TICKS = [50, 55, 60, 65, 70, 75, 80, 85, 90];
 const pct = (age) => ((age - AXIS_MIN) / (AXIS_MAX - AXIS_MIN)) * 100;
 const fmt = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
 
-DATA.forEach((d) => { d.gap = +(d.expF - d.expM).toFixed(1); });
+// Years of each country's gap attributable to women's earlier retirement age
+// (age effect on the female life table); 0 where the pension age is unisex.
+// The remainder is the longevity effect. See the Method section for the basis.
+const AGE_COMPONENT = {
+  "Poland": 4.5, "Chile": 4.4, "Colombia": 4.2, "Austria": 3.4,
+  "Israel": 3.0, "Costa Rica": 1.7, "Switzerland": 0.5, "Türkiye": 3.8,
+};
+DATA.forEach((d) => {
+  d.gap = +(d.expF - d.expM).toFixed(1);
+  d.age = AGE_COMPONENT[d.country] || 0;   // from earlier female retirement
+  d.lon = +(d.gap - d.age).toFixed(1);     // from longer female lifespan
+});
 
 // short codes for the headline gap chart
 const ISO = {
@@ -338,8 +349,109 @@ function renderGapChart() {
   }
 }
 
+/* ---------- Decomposition (stacked) chart ---------- */
+const DECOMP_SCALE = 9.5;     // leaves room for the total label past the bar
+const decompEl = document.getElementById("decompChart");
+
+function showDecompTip(e, d, anchor) {
+  tip.innerHTML =
+    `<div class="tip__title">${d.country}${d.flag ? " *" : ""}</div>` +
+    `<div class="tip__row"><span>Longevity</span><span class="tip__f">${fmt(d.lon)} yr</span></div>` +
+    `<div class="tip__row"><span>Earlier retirement</span><span style="color:var(--policy)">${fmt(d.age)} yr</span></div>` +
+    `<div class="tip__row"><span>Total gap</span><span>+${fmt(d.gap)} yr</span></div>` +
+    (d.age === 0
+      ? `<div class="tip__note">Unisex retirement age — the gap is all longevity.</div>`
+      : `<div class="tip__note">Women retire ${fmt(d.retM - d.retF)} yr earlier (${fmt(d.retF)} vs ${fmt(d.retM)}).</div>`);
+  tip.classList.add("is-on");
+  if (anchor) {
+    const r = anchor.getBoundingClientRect();
+    placeTip(r.left + r.width / 2, r.top);
+  } else {
+    placeTip(e.clientX, e.clientY);
+  }
+}
+
+function renderDecomp() {
+  const rows = [...DATA].sort((a, b) => b.gap - a.gap);
+  const plot = document.createElement("div");
+  plot.className = "decomp__plot";
+
+  const axis = document.createElement("div");
+  axis.className = "decomp__axis";
+  axis.appendChild(document.createElement("div"));    // spacer over label column
+  const ticks = document.createElement("div");
+  ticks.className = "decomp__ticks";
+  [0, 2, 4, 6, 8].forEach((t) => {
+    const s = document.createElement("span");
+    s.style.left = (t / DECOMP_SCALE * 100) + "%";
+    s.textContent = t;
+    ticks.appendChild(s);
+  });
+  axis.appendChild(ticks);
+  plot.appendChild(axis);
+
+  rows.forEach((d, i) => {
+    const row = document.createElement("div");
+    row.className = "drow";
+
+    const name = document.createElement("div");
+    name.className = "drow__name";
+    name.innerHTML = d.country + (d.flag ? ' <span class="flagmark">*</span>' : "");
+
+    const track = document.createElement("div");
+    track.className = "drow__track";
+    track.tabIndex = 0;
+    track.setAttribute("aria-label",
+      `${d.country}: gap ${fmt(d.gap)} years — ${fmt(d.lon)} from longevity, ${fmt(d.age)} from earlier retirement.`);
+
+    const bar = document.createElement("div");
+    bar.className = "dbar";
+    bar.style.width = (d.gap / DECOMP_SCALE * 100) + "%";
+    bar.style.transitionDelay = Math.min(i * 10, 260) + "ms";
+    const lon = document.createElement("div");
+    lon.className = "dseg dseg--lon";
+    lon.style.width = (d.gap ? d.lon / d.gap * 100 : 100) + "%";
+    const age = document.createElement("div");
+    age.className = "dseg dseg--age";
+    age.style.width = (d.gap ? d.age / d.gap * 100 : 0) + "%";
+    bar.appendChild(lon);
+    bar.appendChild(age);
+
+    const total = document.createElement("div");
+    total.className = "drow__total";
+    total.style.left = (d.gap / DECOMP_SCALE * 100) + "%";
+    total.textContent = fmt(d.gap);
+
+    track.appendChild(bar);
+    track.appendChild(total);
+    track.addEventListener("pointerenter", (e) => showDecompTip(e, d));
+    track.addEventListener("pointermove", moveTip);
+    track.addEventListener("pointerleave", hideTip);
+    track.addEventListener("focus", () => showDecompTip(null, d, track));
+    track.addEventListener("blur", hideTip);
+
+    row.appendChild(name);
+    row.appendChild(track);
+    plot.appendChild(row);
+  });
+
+  decompEl.innerHTML = "";
+  decompEl.appendChild(plot);
+
+  if (!("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    plot.classList.add("is-in");
+  } else {
+    const io = new IntersectionObserver((en) => {
+      if (en[0].isIntersecting) { plot.classList.add("is-in"); io.disconnect(); }
+    }, { threshold: 0.08 });
+    io.observe(plot);
+  }
+}
+
 /* ---------- init ---------- */
 renderGapChart();
 renderChart("gap");
+renderDecomp();
 renderTable();
 animateDemo();

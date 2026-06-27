@@ -8,14 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=2" />
+<link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
 <header class="topbar">
   <a class="topbar__mark" href="#top">RET·<span>EXP</span></a>
   <nav class="topbar__nav" aria-label="Sections">
     <a href="#chart">The spans</a>
-    <a href="#findings">What drives it</a>
+    <a href="#drivers">What drives it</a>
     <a href="#data">Full data</a>
     <a href="#method">Method</a>
   </nav>
@@ -121,6 +121,36 @@
       <span class="flagmark">*</span> Türkiye's statutory ages (52 / 49) are a legacy
       and transition artifact; its effective exit is near 61. Chile's 65 / 60 split is
       in the mandatory funded scheme. Both read differently on other measures — see Method.
+    </p>
+  </section>
+
+  <!-- DECOMPOSITION -->
+  <section id="drivers" class="block">
+    <div class="block__head">
+      <p class="eyebrow">Decomposed</p>
+      <h2 class="block__title">Longevity, or earlier retirement?</h2>
+      <p class="block__intro">
+        The gap has two sources: women simply <span class="ink ink--f">live longer</span>, and in a
+        few countries they may <span style="color:var(--policy);font-weight:500">retire earlier</span>.
+        Splitting each country's gap shows which one does the work. On average about
+        <strong>80% is longevity</strong> and <strong>20% earlier retirement</strong> — and the
+        retirement-age share shows up only where pension ages still differ by sex.
+      </p>
+    </div>
+
+    <div class="decomp__legend">
+      <span class="decomp__key"><span class="decomp__swatch decomp__swatch--lon"></span>Longevity — women live longer</span>
+      <span class="decomp__key"><span class="decomp__swatch decomp__swatch--age"></span>Earlier retirement — women retire younger</span>
+    </div>
+
+    <div id="decompChart" class="decomp" role="img"
+         aria-label="Stacked bar chart splitting each country's female-minus-male retirement gap into a longevity component and an earlier-retirement component, sorted largest gap first."></div>
+
+    <p class="decomp__foot">
+      In the roughly 30 countries with unisex pension ages, the bar is pure amber — the whole gap is
+      longevity. Violet appears only in the eight countries that still let women retire earlier (Poland,
+      Chile, Colombia, Austria, Israel, Costa Rica, Switzerland and Türkiye), where it is often the
+      larger half.
     </p>
   </section>
 
@@ -243,6 +273,14 @@
         the statutory measure and is best read via its effective-exit figure (men ≈18,
         women ≈24).
       </p>
+      <p>
+        <strong>The decomposition.</strong> Each gap is split into a longevity part and an
+        earlier-retirement part. The earlier-retirement part is the extra years a woman gains
+        purely by retiring at the (lower) female age rather than the male age, measured on the
+        female life table; it is zero wherever the pension age is unisex. The remainder is the
+        male–female difference in remaining life expectancy at the same age. Both rest on the
+        interpolated life-expectancy figures, so treat each split as accurate to about half a year.
+      </p>
       <p class="method__src">
         <strong>Sources.</strong> OECD <em>Pensions at a Glance</em> 2023 &amp; 2025;
         Finnish Centre for Pensions retirement-age comparison; UN World Population
@@ -262,6 +300,6 @@
   <p class="foot__meta">Retirement &amp; lifespan, by sex · 38 OECD countries</p>
 </footer>
 
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>

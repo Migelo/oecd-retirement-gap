@@ -17,6 +17,8 @@
   --men-dim:   #2a6a68;
   --women:     #e2a33c;   /* amber */
   --women-dim: #8c6422;
+  --policy:    #9f8cd9;   /* violet — earlier-retirement component */
+  --policy-dim:#5e5193;
   --line:      rgba(236, 233, 224, 0.10);
   --line-soft: rgba(236, 233, 224, 0.055);
 
@@ -309,6 +311,100 @@ a { color: inherit; }
 }
 @media (max-width: 680px) {
   .gapcode { font-size: 0.5rem; }
+}
+
+/* ---------- Decomposition (stacked) chart ---------- */
+.block__intro strong { color: var(--ink); font-weight: 600; }
+
+.decomp__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  margin-bottom: 1.5rem;
+}
+.decomp__key {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+}
+.decomp__swatch { width: 0.85rem; height: 0.85rem; border-radius: 3px; flex: none; }
+.decomp__swatch--lon { background: linear-gradient(180deg, var(--women), var(--women-dim)); }
+.decomp__swatch--age { background: linear-gradient(180deg, var(--policy), var(--policy-dim)); }
+
+.decomp__axis {
+  display: grid;
+  grid-template-columns: var(--labelw, 8.5rem) 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+.decomp__ticks { position: relative; height: 1rem; border-bottom: 1px solid var(--line); }
+.decomp__ticks span {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--faint);
+}
+
+.drow {
+  display: grid;
+  grid-template-columns: var(--labelw, 8.5rem) 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.22rem 0;
+}
+.drow:hover { background: rgba(255, 255, 255, 0.018); }
+.drow__name {
+  font-family: var(--display);
+  font-size: 0.86rem;
+  font-weight: 500;
+  text-align: right;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.drow__name .flagmark { color: var(--women); font-family: var(--mono); }
+.drow__track { position: relative; height: 1.15rem; cursor: default; }
+.dbar {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  display: flex;
+  border-radius: 0 3px 3px 0;
+  overflow: hidden;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.decomp__plot.is-in .dbar { clip-path: inset(0 0 0 0); }
+.drow__track:hover .dbar, .drow__track:focus-visible .dbar { filter: brightness(1.15); }
+.drow__track:focus-visible { outline: none; }
+.drow__track:focus-visible .dbar { box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--policy); }
+.dseg { height: 100%; }
+.dseg--lon { background: linear-gradient(180deg, var(--women), var(--women-dim)); }
+.dseg--age { background: linear-gradient(180deg, var(--policy), var(--policy-dim)); }
+.drow__total {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding-left: 0.45rem;
+}
+.drow:hover .drow__total { color: var(--ink); }
+.decomp__foot {
+  margin-top: 1.7rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 47rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decomp__plot .dbar { clip-path: inset(0 0 0 0); }
 }
 
 /* ---------- Controls ---------- */
