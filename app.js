@@ -59,6 +59,18 @@ const fmt = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
 
 DATA.forEach((d) => { d.gap = +(d.expF - d.expM).toFixed(1); });
 
+// short codes for the headline gap chart
+const ISO = {
+  "Australia": "AUS", "Austria": "AUT", "Belgium": "BEL", "Canada": "CAN", "Chile": "CHL",
+  "Colombia": "COL", "Costa Rica": "CRI", "Czechia": "CZE", "Denmark": "DNK", "Estonia": "EST",
+  "Finland": "FIN", "France": "FRA", "Germany": "DEU", "Greece": "GRC", "Hungary": "HUN",
+  "Iceland": "ISL", "Ireland": "IRL", "Israel": "ISR", "Italy": "ITA", "Japan": "JPN",
+  "Korea": "KOR", "Latvia": "LVA", "Lithuania": "LTU", "Luxembourg": "LUX", "Mexico": "MEX",
+  "Netherlands": "NLD", "New Zealand": "NZL", "Norway": "NOR", "Poland": "POL", "Portugal": "PRT",
+  "Slovakia": "SVK", "Slovenia": "SVN", "Spain": "ESP", "Sweden": "SWE", "Switzerland": "CHE",
+  "Türkiye": "TUR", "United Kingdom": "GBR", "United States": "USA",
+};
+
 const SORTERS = {
   gap:    (a, b) => b.gap - a.gap,
   women:  (a, b) => b.expF - a.expF,
@@ -267,7 +279,67 @@ function animateDemo() {
   } else { go(); }
 }
 
+/* ---------- Headline gap chart ---------- */
+const GAP_SCALE = 9;          // y-axis top, just above Poland's 8.6
+const OECD_AVG = 4.4;         // OECD reference (effective-exit basis)
+const gapChartEl = document.getElementById("gapChart");
+
+function renderGapChart() {
+  const rows = [...DATA].sort((a, b) => b.gap - a.gap);
+
+  const plot = document.createElement("div");
+  plot.className = "gapchart__plot";
+
+  const ref = document.createElement("div");
+  ref.className = "gapchart__refline";
+  ref.style.bottom = (OECD_AVG / GAP_SCALE * 100) + "%";
+  ref.innerHTML = `<span>OECD avg ${OECD_AVG}</span>`;
+  plot.appendChild(ref);
+
+  const codes = document.createElement("div");
+  codes.className = "gapchart__codes";
+
+  rows.forEach((d) => {
+    const col = document.createElement("div");
+    col.className = "gapcol";
+    col.style.setProperty("--h", (d.gap / GAP_SCALE * 100) + "%");
+    col.tabIndex = 0;
+    col.setAttribute("aria-label", `${d.country}: women +${fmt(d.gap)} years in retirement versus men.`);
+    const val = document.createElement("span");
+    val.className = "gapcol__val";
+    val.textContent = "+" + fmt(d.gap);
+    col.appendChild(val);
+    col.addEventListener("pointerenter", (e) => showTip(e, d));
+    col.addEventListener("pointermove", moveTip);
+    col.addEventListener("pointerleave", hideTip);
+    col.addEventListener("focus", () => showTip(null, d, col));
+    col.addEventListener("blur", hideTip);
+    plot.appendChild(col);
+
+    const code = document.createElement("div");
+    code.className = "gapcode";
+    code.innerHTML = (ISO[d.country] || d.country.slice(0, 3).toUpperCase()) +
+      (d.flag ? ' <span class="flagmark">*</span>' : "");
+    codes.appendChild(code);
+  });
+
+  gapChartEl.innerHTML = "";
+  gapChartEl.appendChild(plot);
+  gapChartEl.appendChild(codes);
+
+  if (!("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    plot.classList.add("is-in");
+  } else {
+    const io = new IntersectionObserver((en) => {
+      if (en[0].isIntersecting) { plot.classList.add("is-in"); io.disconnect(); }
+    }, { threshold: 0.2 });
+    io.observe(plot);
+  }
+}
+
 /* ---------- init ---------- */
+renderGapChart();
 renderChart("gap");
 renderTable();
 animateDemo();

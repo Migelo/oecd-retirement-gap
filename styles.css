@@ -218,6 +218,99 @@ a { color: inherit; }
 }
 .demo__cap strong { color: var(--ink-soft); font-weight: 500; }
 
+/* ---------- Hero gap chart (headline plot) ---------- */
+.gapfig { margin: 0; }
+.gapfig__head { margin-bottom: 1.2rem; max-width: 40rem; }
+.gapfig__eyebrow {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--women);
+}
+.gapfig__title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.2rem, 2.3vw, 1.6rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0.55rem 0 0.4rem;
+}
+.gapfig__sub { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+.gapchart { overflow-x: auto; padding-top: 1.3rem; }
+.gapchart__plot {
+  position: relative;
+  height: 220px;
+  min-width: 640px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  border-bottom: 1px solid var(--line);
+}
+.gapcol {
+  position: relative;
+  flex: 1 1 0;
+  height: 0;
+  background: linear-gradient(180deg, var(--women), var(--women-dim));
+  border-radius: 3px 3px 0 0;
+  cursor: default;
+  transition: height 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.15s ease;
+}
+.gapchart__plot.is-in .gapcol { height: var(--h); }
+.gapcol:hover, .gapcol:focus-visible { filter: brightness(1.22); outline: none; }
+.gapcol:focus-visible { box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--women); }
+.gapcol__val {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 3px;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--ink-soft);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+.gapcol:hover .gapcol__val,
+.gapcol:focus-visible .gapcol__val { opacity: 1; }
+.gapchart__refline {
+  position: absolute;
+  left: 0; right: 0;
+  border-top: 1px dashed var(--men);
+  pointer-events: none;
+}
+.gapchart__refline span {
+  position: absolute;
+  right: 0;
+  top: -0.6rem;
+  background: var(--bg);
+  padding: 0 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.02em;
+  color: var(--men);
+}
+.gapchart__codes { display: flex; gap: 2px; margin-top: 0.45rem; min-width: 640px; }
+.gapcode {
+  flex: 1 1 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.gapcode .flagmark { color: var(--women); }
+@media (prefers-reduced-motion: reduce) {
+  .gapchart__plot .gapcol { height: var(--h); }
+}
+@media (max-width: 680px) {
+  .gapcode { font-size: 0.5rem; }
+}
+
 /* ---------- Controls ---------- */
 .controls {
   display: flex;

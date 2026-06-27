@@ -34,6 +34,43 @@
       expectancy runs out, that is consistently longer for women than for men.
     </p>
 
+    <!-- Headline plot: the female–male gap, one bar per country -->
+    <figure class="gapfig" aria-labelledby="gapfig-title">
+      <figcaption class="gapfig__head">
+        <span class="gapfig__eyebrow">The headline, in one view</span>
+        <h2 id="gapfig-title" class="gapfig__title">Extra years women spend in retirement, by country</h2>
+        <p class="gapfig__sub">
+          Each bar is the female–minus–male gap in expected years of retirement,
+          highest to lowest. The dashed line marks the OECD average. Hover a bar for
+          the country and figure.
+        </p>
+      </figcaption>
+      <div id="gapChart" class="gapchart" role="img"
+           aria-label="Bar chart of the female-minus-male gap in expected years of retirement for 38 OECD countries, sorted largest to smallest. Poland is highest at about 8.6 years and Iceland lowest at about 1.8 years; the OECD average is 4.4 years."></div>
+    </figure>
+
+    <aside class="pullstat">
+      <p class="pullstat__num">+4.4<span>yrs</span></p>
+      <p class="pullstat__cap">
+        The OECD's own figure for the gap — the dashed line above — measured from the
+        average effective exit age, 2022: men spend <strong>18.4</strong> years in
+        retirement, women <strong>22.8</strong>.
+      </p>
+    </aside>
+  </section>
+
+  <!-- CHART -->
+  <section id="chart" class="block">
+    <div class="block__head">
+      <p class="eyebrow">The spans</p>
+      <h2 class="block__title">Years of retirement, country by country</h2>
+      <p class="block__intro">
+        Bars run along a shared age ruler. <span class="ink ink--m">Teal is men</span>,
+        <span class="ink ink--f">amber is women</span>. Longer bar, longer retirement.
+        Hover or focus any bar for the underlying numbers.
+      </p>
+    </div>
+
     <!-- Explanatory span diagram = the legend that teaches the chart -->
     <figure class="demo" aria-label="How to read a span: the bar runs from retirement age to expected end of life.">
       <div class="demo__ruler" aria-hidden="true">
@@ -68,19 +105,6 @@
         between the sexes.
       </figcaption>
     </figure>
-  </section>
-
-  <!-- CHART -->
-  <section id="chart" class="block">
-    <div class="block__head">
-      <p class="eyebrow">The spans</p>
-      <h2 class="block__title">Years of retirement, country by country</h2>
-      <p class="block__intro">
-        Bars run along a shared age ruler. <span class="ink ink--m">Teal is men</span>,
-        <span class="ink ink--f">amber is women</span>. Longer bar, longer retirement.
-        Hover or focus any bar for the underlying numbers.
-      </p>
-    </div>
 
     <div class="controls" role="group" aria-label="Sort the countries">
       <span class="controls__label">Sort by</span>
@@ -157,15 +181,6 @@
         </p>
       </li>
     </ol>
-
-    <aside class="pullstat">
-      <p class="pullstat__num">+4.4<span>yrs</span></p>
-      <p class="pullstat__cap">
-        The OECD's own figure for the gap, measured from the average effective exit
-        age, 2022: men spend <strong>18.4</strong> years in retirement, women
-        <strong>22.8</strong>.
-      </p>
-    </aside>
   </section>
 
   <!-- DATA TABLE -->
